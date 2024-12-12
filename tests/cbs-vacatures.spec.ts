@@ -65,6 +65,7 @@ describe("Vacancies", () => {
         expect(response.headers["odata-version"]).toEqual("4.0");
         expect(response.headers["content-type"]).toContain("application/json");
         expect(response.headers["content-type"]).toContain("charset=utf-8");
+        expect(response.body["@odata.context"]).toContain(baseUrl + "/$metadata#Vacancies");
     }
 
     function expectValidVacancies(vacancies: any[]) {
@@ -84,7 +85,7 @@ describe("Vacancies", () => {
         expect(vacancy.Salary).toEqual(`€ ${vacancy.MinSalary} tot € ${vacancy.MaxSalary}`);
         expect(vacancy.SalaryPeriod).toEqual("MONTH");
         expect(vacancy.YourProfile).toMatch(/ervaring|niveau/);
-        expect(vacancy.WorkLocation.includes("Heerlen") | vacancy.WorkLocation.includes("Den Haag")).toBeTruthy();  
+        expect(vacancy.WorkLocation.includes("Heerlen") | vacancy.WorkLocation.includes("Den Haag")).toBeTruthy();
         expect(new Date(vacancy.PublicationDate).getFullYear()).toBeGreaterThanOrEqual(new Date().getFullYear() - 1);
     }
 })
