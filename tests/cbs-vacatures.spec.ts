@@ -84,6 +84,7 @@ describe("Vacancies", () => {
         expect(vacancy.Salary).toEqual(`€ ${vacancy.MinSalary} tot € ${vacancy.MaxSalary}`);
         expect(vacancy.SalaryPeriod).toEqual("MONTH");
         expect(vacancy.YourProfile).toMatch(/ervaring|niveau/);
+        expect(vacancy.WorkLocation.includes("Heerlen") | vacancy.WorkLocation.includes("Den Haag")).toBeTruthy();  
         expect(new Date(vacancy.PublicationDate).getFullYear()).toBeGreaterThanOrEqual(new Date().getFullYear() - 1);
     }
 })
