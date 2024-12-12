@@ -62,9 +62,9 @@ describe("Vacancies", () => {
 
     function expectValidOdataResponse(response: any) {
         expect(response.status).toEqual(200);
-        expect(response.headers["odata-version"]).toEqual("4.0");
         expect(response.headers["content-type"]).toContain("application/json");
         expect(response.headers["content-type"]).toContain("charset=utf-8");
+        expect(response.headers["odata-version"]).toEqual("4.0");        
         expect(response.body["@odata.context"]).toContain(baseUrl + "/$metadata#Vacancies");
     }
 
