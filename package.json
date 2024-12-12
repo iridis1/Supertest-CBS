@@ -2,9 +2,8 @@
   "name": "supertest-cbs",
   "version": "1.0.0",
   "description": "Exploring Supertest using Typescript",
-  "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest"
   },
   "keywords": [
     "exploring",
