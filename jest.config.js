@@ -1,9 +1,9 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} **/
 module.exports = {
   testEnvironment: "node",
-  testMatch : ["**/*.spec.ts"],
+  testMatch: ["**/*.spec.ts"],
   transform: {
-    "^.+.tsx?$": ["ts-jest",{}],
+    "^.+.tsx?$": ["ts-jest", {}],
   },
   reporters: [
     "default",
@@ -23,5 +23,5 @@ module.exports = {
         includeFailureMsg: true
       }
     ]
-  ]  
+  ]
 };
