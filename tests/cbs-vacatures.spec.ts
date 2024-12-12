@@ -36,7 +36,7 @@ describe("Vacancies", () => {
         expect(vacanciesExcludingSkipped.reverse()[0]).toEqual(vacanciesIncludingSkipped.reverse()[0]);
     });
 
-    it("GET /Vacancy(uniqueId) should return vacancy specified by uniqueId", async () => {
+    it("GET /Vacancies(uniqueId) should return vacancy specified by uniqueId", async () => {
         const responseAll = await request(baseUrl).get("/Vacancies?$top=1").set("Accept", "application/json");
         const uniqueId = responseAll.body.value[0].UniqueId;
         const response = await request(baseUrl).get(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
@@ -48,13 +48,13 @@ describe("Vacancies", () => {
         expectValidVacancy(vacancy);
     });
 
-    it("GET /Vacancy(nonexistentUniqueId) should return nothing for nonexistent vacancy", async () => {
+    it("GET /Vacancies(nonexistentUniqueId) should return nothing for nonexistent vacancy", async () => {
         const uniqueId = "00000000-0000-0000-0000-000000000000-nl-nl";
         const response = await request(baseUrl).get(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
         expect(response.status).toEqual(204);
     });
 
-    it("DELETE /Vacancy(uniqueId) should return method not allowed", async () => {
+    it("DELETE /Vacancies(uniqueId) should return method not allowed", async () => {
         const uniqueId = "12345678-0000-0000-0000-000000000000-nl-nl";
         const response = await request(baseUrl).delete(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
         expect(response.status).toEqual(405);
