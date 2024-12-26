@@ -12,7 +12,7 @@ describe("Vacancies", () => {
         expectValidVacancies(vacancies);
     });
 
-    it("GET /Vacancies$top=2 should return only specified number of vacancies", async () => {
+    it("GET /Vacancies$top=2 should return specified number of vacancies", async () => {
         const numberOfVacancies = 2;
         const response = await request(baseUrl).get(`/Vacancies?$top=${numberOfVacancies}`).set("Accept", "application/json");
         expectValidOdataResponse(response);
@@ -31,7 +31,7 @@ describe("Vacancies", () => {
         const vacanciesIncludingSkipped = responseIncludingSkipped.body.value;
         const vacanciesExcludingSkipped = responseExcludingSkipped.body.value;
         expectValidVacancies(vacanciesExcludingSkipped);
-        expect(vacanciesIncludingSkipped).toHaveLength(vacanciesExcludingSkipped.length + skippedVacancies);
+        expect(vacanciesExcludingSkipped).toHaveLength(vacanciesIncludingSkipped.length - skippedVacancies);
         expect(vacanciesExcludingSkipped[0]).toEqual(vacanciesIncludingSkipped[skippedVacancies]);
         expect(vacanciesExcludingSkipped.reverse()[0]).toEqual(vacanciesIncludingSkipped.reverse()[0]);
     });
