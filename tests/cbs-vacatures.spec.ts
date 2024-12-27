@@ -1,10 +1,10 @@
 import request from "supertest";
 
-const baseUrl = "https://www.cbs.nl/odata/v1";
+const BASE_URL = "https://www.cbs.nl/odata/v1";
 
 describe("Vacancies", () => {
     it("GET /Vacancies should return vacancies", async () => {
-        const response = await request(baseUrl).get("/Vacancies").set("Accept", "application/json");
+        const response = await request(BASE_URL).get("/Vacancies").set("Accept", "application/json");
         expectValidOdataResponse(response);
 
         const vacancies = response.body.value;
@@ -14,7 +14,7 @@ describe("Vacancies", () => {
 
     it("GET /Vacancies$top=2 should return specified number of vacancies", async () => {
         const numberOfVacancies = 2;
-        const response = await request(baseUrl).get(`/Vacancies?$top=${numberOfVacancies}`).set("Accept", "application/json");
+        const response = await request(BASE_URL).get(`/Vacancies?$top=${numberOfVacancies}`).set("Accept", "application/json");
         expectValidOdataResponse(response);
 
         const vacancies = response.body.value;
@@ -24,8 +24,8 @@ describe("Vacancies", () => {
 
     it("GET /Vacancies?$skip=2 should return all but skipped vacancies", async () => {
         const skippedVacancies = 2;
-        const responseIncludingSkipped = await request(baseUrl).get(`/Vacancies`).set("Accept", "application/json");
-        const responseExcludingSkipped = await request(baseUrl).get(`/Vacancies?$skip=${skippedVacancies}`).set("Accept", "application/json");
+        const responseIncludingSkipped = await request(BASE_URL).get(`/Vacancies`).set("Accept", "application/json");
+        const responseExcludingSkipped = await request(BASE_URL).get(`/Vacancies?$skip=${skippedVacancies}`).set("Accept", "application/json");
         expectValidOdataResponse(responseExcludingSkipped);
 
         const vacanciesIncludingSkipped = responseIncludingSkipped.body.value;
@@ -37,9 +37,9 @@ describe("Vacancies", () => {
     });
 
     it("GET /Vacancies(uniqueId) should return vacancy specified by uniqueId", async () => {
-        const responseAll = await request(baseUrl).get("/Vacancies?$top=1").set("Accept", "application/json");
+        const responseAll = await request(BASE_URL).get("/Vacancies?$top=1").set("Accept", "application/json");
         const uniqueId = responseAll.body.value[0].UniqueId;
-        const response = await request(baseUrl).get(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
+        const response = await request(BASE_URL).get(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
         expectValidOdataResponse(response);
 
         const vacancy = response.body;
@@ -50,13 +50,13 @@ describe("Vacancies", () => {
 
     it("GET /Vacancies(nonexistentUniqueId) should return nothing for nonexistent vacancy", async () => {
         const uniqueId = "00000000-0000-0000-0000-000000000000-nl-nl";
-        const response = await request(baseUrl).get(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
+        const response = await request(BASE_URL).get(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
         expect(response.status).toEqual(204);
     });
 
     it("DELETE /Vacancies(uniqueId) should return method not allowed", async () => {
         const uniqueId = "12345678-0000-0000-0000-000000000000-nl-nl";
-        const response = await request(baseUrl).delete(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
+        const response = await request(BASE_URL).delete(`/Vacancies('${uniqueId}')`).set("Accept", "application/json");
         expect(response.status).toEqual(405);
     });
 
@@ -65,7 +65,7 @@ describe("Vacancies", () => {
         expect(response.headers["content-type"]).toContain("application/json");
         expect(response.headers["content-type"]).toContain("charset=utf-8");
         expect(response.headers["odata-version"]).toEqual("4.0");        
-        expect(response.body["@odata.context"]).toContain(baseUrl + "/$metadata#Vacancies");
+        expect(response.body["@odata.context"]).toContain(BASE_URL + "/$metadata#Vacancies");
     }
 
     function expectValidVacancies(vacancies: any[]) {
